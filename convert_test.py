@@ -35,7 +35,19 @@ def conjpg(rootdir):
 			os.system(cmd)
 
 def genmov(path):
-	os.system("ffmpeg -f image2 -start_number 100 -r 24 -i /tmp/proxy%s" %(path)
+	
+	os.system("ffmpeg -f image2 -start_number 100 -r 24 -i %s" %(path)
+
+def toFFmpeg(path) :
+	"""
+	경로를 받아서 시퀀스라면 ffmpeg 경로로 바꾸어준다.
+	"""
+	p = re.findall('\.(\d+)\.', path.replace("\\", "/")
+	if len(p) != 1:                                     #예외 처리
+		return path, "경로가 시퀀스 구조가 아닙니다."  
+	digitNum = len(p[0])
+	head, tail = path.split(p[0])
+	return "%s%%%dd%s" %(head, digitNum, tail), None
 
 if __name__ == "__main__":
 	root = "/project/circle/in/aces_exr"
